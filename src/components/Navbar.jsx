@@ -3,9 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@heroui/react";
+import { useSession, signOut } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session, isPending } = useSession();
+  // console.log("Session data in Navbar:", session, "Is pending:", isPending);
+  const user = session?.user;
+
+  const handleSignOut = async () => {
+    await signOut();
+
+  }
 
   const navLinks = [
     {
@@ -61,12 +70,20 @@ export default function Navbar() {
 
             {/* Auth Links */}
             <div className="flex items-center gap-4">
-              <Link
-                href="/auth/signin"
-                className="text-sm font-medium text-violet-400 transition hover:text-violet-300"
-              >
-                Sign In
-              </Link>
+              {
+                user ?
+                  <>
+                    Hi, {user.name}!
+                    <Button onClick={handleSignOut}
+                      variant="ghost">Sign Out</Button>
+                  </>
+                  :
+                  <Link
+                    href="/auth/signin"
+                    className="text-sm font-medium text-violet-400 transition hover:text-violet-300"
+                  >
+                    Sign In
+                  </Link>}
 
               <Button
                 as={Link}

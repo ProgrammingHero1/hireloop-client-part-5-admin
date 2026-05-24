@@ -31,6 +31,7 @@ export default function SignupPage() {
                 email,
                 password,
                 name,
+                callbackURL: "/",
             });
 
             if (authError) {
