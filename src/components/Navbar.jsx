@@ -27,7 +27,7 @@ export default function Navbar() {
     },
     {
       label: "Pricing",
-      href: "/pricing",
+      href: "/plans",
     },
   ];
 
